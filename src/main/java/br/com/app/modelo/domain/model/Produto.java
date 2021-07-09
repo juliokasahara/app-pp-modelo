@@ -9,12 +9,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 //@Data para gerar o get/set e EqualsAndHashCode
+
 @Data
 @AllArgsConstructor
-@Entity(name = "Produto")
+@NoArgsConstructor
+@Entity
+@Builder
 public class Produto {
 	
 	@Id

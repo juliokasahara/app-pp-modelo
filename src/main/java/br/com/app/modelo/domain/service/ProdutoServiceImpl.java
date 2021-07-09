@@ -37,7 +37,8 @@ public class ProdutoServiceImpl implements ProdutoService{
 	}
 	
 	public Produto save(ProdutoPostRequest produtoPostRequest) {
-		return produtoDAO.save(ProdutoMapper.INSTANCE.toProduto(produtoPostRequest));
+		Produto produto = ProdutoMapper.INSTANCE.toProduto(produtoPostRequest);
+		return produtoDAO.save(produto);
 	}
 
 	public void update(ProdutoPutRequest produtoPutRequest) {
