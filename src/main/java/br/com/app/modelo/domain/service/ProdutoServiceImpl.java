@@ -2,15 +2,17 @@ package br.com.app.modelo.domain.service;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.app.modelo.domain.DAO.ProdutoDAO;
+import br.com.app.modelo.domain.DTO.ProdutoPostDTO;
+import br.com.app.modelo.domain.DTO.ProdutoPutDTO;
+import br.com.app.modelo.domain.exception.BadRequestException;
 import br.com.app.modelo.domain.mapper.ProdutoMapper;
 import br.com.app.modelo.domain.model.Produto;
-import br.com.app.modelo.domain.request.ProdutoPostRequest;
-import br.com.app.modelo.domain.request.ProdutoPutRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,8 +21,8 @@ public class ProdutoServiceImpl implements ProdutoService{
 	
 	private final ProdutoDAO produtoDAO;
 
-	public List<Produto> findAll() {
-		return produtoDAO.findAll();
+	public Page<Produto> findAll(Pageable pageable) {
+		return produtoDAO.findAll(pageable);
 	}
 	
 	public List<Produto> findByName(String nome) {
@@ -28,7 +30,7 @@ public class ProdutoServiceImpl implements ProdutoService{
 	}
 
 	public Produto findByIdOrThrowBadRequest(long id) {
-		return produtoDAO.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto não existe"));
+		return produtoDAO.findById(id).orElseThrow(() -> new BadRequestException("Produto não existe"));
 	}
 
 	public void delete(long id) {
@@ -36,12 +38,13 @@ public class ProdutoServiceImpl implements ProdutoService{
 		
 	}
 	
-	public Produto save(ProdutoPostRequest produtoPostRequest) {
-		Produto produto = ProdutoMapper.INSTANCE.toProduto(produtoPostRequest);
-		return produtoDAO.save(produto);
+//	@Transactional(rollbackFor = Exception.class) checked unchecked exception
+	@Transactional
+	public Produto save(ProdutoPostDTO produtoPostRequest) {
+		return produtoDAO.save(ProdutoMapper.INSTANCE.toProduto(produtoPostRequest));
 	}
 
-	public void update(ProdutoPutRequest produtoPutRequest) {
+	public void update(ProdutoPutDTO produtoPutRequest) {
 		Produto produtoBanco = findByIdOrThrowBadRequest(produtoPutRequest.getIdProduto());
 		Produto produto = ProdutoMapper.INSTANCE.toProduto(produtoPutRequest);
 		produto.setIdProduto(produtoBanco.getIdProduto());

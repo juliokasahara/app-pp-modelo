@@ -2,6 +2,10 @@ package br.com.app.modelo.domain.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.app.modelo.domain.DTO.ProdutoPostDTO;
+import br.com.app.modelo.domain.DTO.ProdutoPutDTO;
 import br.com.app.modelo.domain.model.Produto;
-import br.com.app.modelo.domain.request.ProdutoPostRequest;
-import br.com.app.modelo.domain.request.ProdutoPutRequest;
 import br.com.app.modelo.domain.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 
@@ -28,8 +32,8 @@ public class ProdutoController {
 	private final ProdutoService produtoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Produto>> listAll() {
-		return ResponseEntity.ok(produtoService.findAll());
+	public ResponseEntity<Page<Produto>> listAll(Pageable pageable) {
+		return ResponseEntity.ok(produtoService.findAll(pageable));
 	}
 	
 	@GetMapping(path = "/{id}")
@@ -43,18 +47,18 @@ public class ProdutoController {
 	}
 	
 	@PostMapping
-    public ResponseEntity<Produto> save(@RequestBody ProdutoPostRequest produtoPostRequest) {
+    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoPostDTO produtoPostRequest) {
         return new ResponseEntity<>(produtoService.save(produtoPostRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
     	produtoService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody ProdutoPutRequest produtoPutRequest) {
+    public ResponseEntity<Void> replace(@RequestBody ProdutoPutDTO produtoPutRequest) {
     	produtoService.update(produtoPutRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

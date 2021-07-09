@@ -2,13 +2,16 @@ package br.com.app.modelo.domain.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import br.com.app.modelo.domain.DTO.ProdutoPostDTO;
+import br.com.app.modelo.domain.DTO.ProdutoPutDTO;
 import br.com.app.modelo.domain.model.Produto;
-import br.com.app.modelo.domain.request.ProdutoPostRequest;
-import br.com.app.modelo.domain.request.ProdutoPutRequest;
 
 public interface ProdutoService{
 
-	List<Produto> findAll();
+	Page<Produto> findAll(Pageable pageable);
 	
 	List<Produto> findByName(String nome);
 
@@ -16,8 +19,8 @@ public interface ProdutoService{
 
 	void delete(long id);
 
-	Produto save(ProdutoPostRequest produtoPostRequest);
+	Produto save(ProdutoPostDTO produtoPostRequest);
 
-	void update(ProdutoPutRequest produtoPutRequest);
+	void update(ProdutoPutDTO produtoPutRequest);
 
 }
