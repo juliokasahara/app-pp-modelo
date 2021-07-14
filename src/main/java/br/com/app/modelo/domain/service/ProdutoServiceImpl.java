@@ -47,7 +47,7 @@ public class ProdutoServiceImpl implements ProdutoService{
 	public void update(ProdutoPutDTO produtoPutRequest) {
 		Produto produtoBanco = findByIdOrThrowBadRequest(produtoPutRequest.getIdProduto());
 		Produto produto = ProdutoMapper.INSTANCE.toProduto(produtoPutRequest);
-		produto.setIdProduto(produtoBanco.getIdProduto());
+		produto.setId(produtoBanco.getId());
 		produtoDAO.save(produto);
 	}
 

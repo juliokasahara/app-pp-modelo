@@ -26,13 +26,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/produtos")
+@RequestMapping("produtos")
 public class ProdutoController {
 	
 	private final ProdutoService produtoService;
 	
 	@GetMapping
-	public ResponseEntity<Page<Produto>> listAll(Pageable pageable) {
+	public ResponseEntity<Page<Produto>> list(Pageable pageable) {
 		return ResponseEntity.ok(produtoService.findAll(pageable));
 	}
 	

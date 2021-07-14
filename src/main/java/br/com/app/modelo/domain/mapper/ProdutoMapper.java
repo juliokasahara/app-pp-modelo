@@ -12,7 +12,6 @@ import br.com.app.modelo.domain.model.Produto;
 public abstract class ProdutoMapper {	
 	public static final ProdutoMapper INSTANCE = Mappers.getMapper(ProdutoMapper.class);
 	
-	@Mapping(target = "idProduto", ignore = true)
 	public abstract Produto toProduto(ProdutoPostDTO produtoPostRequest);
 	
 	public abstract Produto toProduto(ProdutoPutDTO produtoPutRequest);
