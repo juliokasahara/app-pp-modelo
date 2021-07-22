@@ -29,6 +29,8 @@ public class Produto {
 	private String nome;
 	@Column(nullable = false)
 	private BigDecimal valor;
+	@Column(nullable = false)
+	private Integer quantidade;
 	@Column
 	private String descricao;
 

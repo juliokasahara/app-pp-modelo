@@ -47,8 +47,8 @@ public class ProdutoController {
 	}
 	
 	@PostMapping
-    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoPostDTO produtoPostRequest) {
-        return new ResponseEntity<>(produtoService.save(produtoPostRequest), HttpStatus.CREATED);
+    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoPostDTO produtoPostDTO) {
+        return new ResponseEntity<>(produtoService.save(produtoPostDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")

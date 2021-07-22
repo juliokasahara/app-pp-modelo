@@ -1,7 +1,6 @@
 package br.com.app.modelo.domain.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import br.com.app.modelo.domain.DTO.ProdutoPostDTO;
