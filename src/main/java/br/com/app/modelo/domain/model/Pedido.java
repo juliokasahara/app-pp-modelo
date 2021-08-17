@@ -1,6 +1,5 @@
 package br.com.app.modelo.domain.model;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,7 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,23 +28,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Produto {
+public class Pedido {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_produto")
-	private Long idProduto;
+	@Column(name="id_pedido")
+	private Long idPedido;
 	@Column(nullable = false)
-	private String nome;
-	@Column(nullable = false)
-	private BigDecimal valor;
-	@Column(nullable = false)
-	private Integer estoque;
-	@Column
-	private String descricao;
+	private Integer quantidade;
 	
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY,mappedBy = "produtos")
-	private List<Pedido> pedidos;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_comanda")
+	private Comanda comanda;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "pedido_produto",	
+	    joinColumns = {@JoinColumn(name = "id_pedido")},
+	    inverseJoinColumns = {@JoinColumn(name = "id_produto")},
+	    uniqueConstraints = {@UniqueConstraint(
+	    columnNames = {"id_pedido", "id_produto"})}
+	)
+	private List<Produto> produtos;
 
 }

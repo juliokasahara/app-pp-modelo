@@ -18,48 +18,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.app.modelo.domain.DTO.ProdutoDTO;
-import br.com.app.modelo.domain.model.Produto;
-import br.com.app.modelo.domain.service.ProdutoService;
+import br.com.app.modelo.domain.DTO.ComandaDTO;
+import br.com.app.modelo.domain.model.Comanda;
+import br.com.app.modelo.domain.service.ComandaService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("produtos")
-public class ProdutoController {
+@RequestMapping("comandas")
+public class ComandaController {
 	
-	private final ProdutoService produtoService;
+	private final ComandaService comandaService;
 	
 	@GetMapping
-	public ResponseEntity<Page<Produto>> list(Pageable pageable) {
-		return ResponseEntity.ok(produtoService.findAll(pageable));
+	public ResponseEntity<Page<Comanda>> list(Pageable pageable) {
+		return ResponseEntity.ok(comandaService.findAll(pageable));
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Produto> findById(@PathVariable long id) {
-		return ResponseEntity.ok(produtoService.findByIdOrThrowBadRequest(id));
+	public ResponseEntity<Comanda> findById(@PathVariable long id) {
+		return ResponseEntity.ok(comandaService.findByIdOrThrowBadRequest(id));
 	}
 	
 	@GetMapping(path = "/buscar")
-	public ResponseEntity<List<Produto>> findByNome(@RequestParam String nome) {
-		return ResponseEntity.ok(produtoService.findByName(nome));
+	public ResponseEntity<List<Comanda>> findByNome(@RequestParam String nome) {
+		return ResponseEntity.ok(comandaService.findByName(nome));
 	}
 	
 	@PostMapping
-    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoDTO produtoDTO) {
-        return new ResponseEntity<>(produtoService.save(produtoDTO), HttpStatus.CREATED);
+    public ResponseEntity<Comanda> save(@RequestBody @Valid ComandaDTO comandaDTO) {
+        return new ResponseEntity<>(comandaService.save(comandaDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-    	produtoService.delete(id);
+    	comandaService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody ProdutoDTO produtoDTO) {
-    	produtoService.update(produtoDTO);
+    public ResponseEntity<Void> replace(@RequestBody ComandaDTO comandaDTO) {
+    	comandaService.update(comandaDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 
 }
