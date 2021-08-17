@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.app.modelo.domain.DAO.ProdutoDAO;
-import br.com.app.modelo.domain.DTO.ProdutoPostDTO;
-import br.com.app.modelo.domain.DTO.ProdutoPutDTO;
+import br.com.app.modelo.domain.DTO.ProdutoDTO;
 import br.com.app.modelo.domain.exception.BadRequestException;
 import br.com.app.modelo.domain.mapper.ProdutoMapper;
 import br.com.app.modelo.domain.model.Produto;
@@ -38,16 +37,17 @@ public class ProdutoServiceImpl implements ProdutoService{
 		
 	}
 	
-//	@Transactional(rollbackFor = Exception.class) checked unchecked exception
-	@Transactional
-	public Produto save(ProdutoPostDTO produtoPostRequest) {
-		return produtoDAO.save(ProdutoMapper.INSTANCE.toProduto(produtoPostRequest));
+//	checked unchecked exception
+	@Transactional(rollbackFor = Exception.class)
+	public Produto save(ProdutoDTO produtoDTO) {
+		
+		return produtoDAO.save(ProdutoMapper.INSTANCE.toProduto(produtoDTO));
 	}
 
-	public void update(ProdutoPutDTO produtoPutRequest) {
-		Produto produtoBanco = findByIdOrThrowBadRequest(produtoPutRequest.getIdProduto());
-		Produto produto = ProdutoMapper.INSTANCE.toProduto(produtoPutRequest);
-		produto.setId(produtoBanco.getId());
+	public void update(ProdutoDTO produtoDTO) {
+		Produto produtoBanco = findByIdOrThrowBadRequest(produtoDTO.getIdProduto());
+		Produto produto = ProdutoMapper.INSTANCE.toProduto(produtoDTO);
+		produto.setIdProduto(produtoBanco.getIdProduto());
 		produtoDAO.save(produto);
 	}
 

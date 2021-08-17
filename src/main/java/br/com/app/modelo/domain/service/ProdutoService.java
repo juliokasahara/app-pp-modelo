@@ -5,8 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import br.com.app.modelo.domain.DTO.ProdutoPostDTO;
-import br.com.app.modelo.domain.DTO.ProdutoPutDTO;
+import br.com.app.modelo.domain.DTO.ProdutoDTO;
 import br.com.app.modelo.domain.model.Produto;
 
 public interface ProdutoService{
@@ -19,8 +18,8 @@ public interface ProdutoService{
 
 	void delete(long id);
 
-	Produto save(ProdutoPostDTO produtoPostRequest);
+	Produto save(ProdutoDTO produtoDTO);
 
-	void update(ProdutoPutDTO produtoPutRequest);
+	void update(ProdutoDTO produtoDTO);
 
 }

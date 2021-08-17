@@ -18,47 +18,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.app.modelo.domain.DTO.ProdutoDTO;
-import br.com.app.modelo.domain.model.Produto;
-import br.com.app.modelo.domain.service.ProdutoService;
+import br.com.app.modelo.domain.DTO.UsuarioDTO;
+import br.com.app.modelo.domain.model.Usuario;
+import br.com.app.modelo.domain.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("produtos")
-public class ProdutoController {
+@RequestMapping("usuarios")
+public class UsuarioController {
 	
-	private final ProdutoService produtoService;
+	private final UsuarioService usuarioService;
 	
 	@GetMapping
-	public ResponseEntity<Page<Produto>> list(Pageable pageable) {
-		return ResponseEntity.ok(produtoService.findAll(pageable));
+	public ResponseEntity<Page<Usuario>> list(Pageable pageable) {
+		return ResponseEntity.ok(usuarioService.findAll(pageable));
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Produto> findById(@PathVariable long id) {
-		return ResponseEntity.ok(produtoService.findByIdOrThrowBadRequest(id));
+	public ResponseEntity<Usuario> findById(@PathVariable long id) {
+		return ResponseEntity.ok(usuarioService.findByIdOrThrowBadRequest(id));
 	}
 	
 	@GetMapping(path = "/buscar")
-	public ResponseEntity<List<Produto>> findByNome(@RequestParam String nome) {
-		return ResponseEntity.ok(produtoService.findByName(nome));
+	public ResponseEntity<List<Usuario>> findByNome(@RequestParam String nome) {
+		return ResponseEntity.ok(usuarioService.findByName(nome));
 	}
 	
 	@PostMapping
-    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoDTO produtoDTO) {
-        return new ResponseEntity<>(produtoService.save(produtoDTO), HttpStatus.CREATED);
+    public ResponseEntity<Usuario> save(@RequestBody @Valid UsuarioDTO usuarioDTO) {
+        return new ResponseEntity<>(usuarioService.save(usuarioDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-    	produtoService.delete(id);
+    	usuarioService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody ProdutoDTO produtoDTO) {
-    	produtoService.update(produtoDTO);
+    public ResponseEntity<Void> replace(@RequestBody UsuarioDTO usuarioDTO) {
+    	usuarioService.update(usuarioDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

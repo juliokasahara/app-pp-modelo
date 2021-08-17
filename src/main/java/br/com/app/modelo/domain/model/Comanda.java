@@ -9,7 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,23 +29,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Produto {
+public class Comanda {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_produto")
-	private Long idProduto;
+	@Column(name="id_comanda")
+	private Long idComanda;
+	@Column
+	private BigDecimal valor;
 	@Column(nullable = false)
 	private String nome;
 	@Column(nullable = false)
-	private BigDecimal valor;
+	private String numMesa;
 	@Column(nullable = false)
-	private Integer estoque;
-	@Column
-	private String descricao;
+	private String flgStatus;
 	
-	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY,mappedBy = "produtos")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "comanda")
 	private List<Pedido> pedidos;
+
 
 }
