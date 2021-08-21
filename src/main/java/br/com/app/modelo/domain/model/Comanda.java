@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,8 +36,6 @@ public class Comanda {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_comanda")
 	private Long idComanda;
-	@Column
-	private BigDecimal valor;
 	@Column(nullable = false)
 	private String nome;
 	@Column(nullable = false)
@@ -44,6 +43,7 @@ public class Comanda {
 	@Column(nullable = false)
 	private String flgStatus;
 	
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "comanda")
 	private List<Pedido> pedidos;
 

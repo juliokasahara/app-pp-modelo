@@ -12,9 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,22 +37,14 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_pedido")
 	private Long idPedido;
-	@Column(nullable = false)
-	private Integer quantidade;
 	
-	@JsonIgnore
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_comanda")
 	private Comanda comanda;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "pedido_produto",	
-	    joinColumns = {@JoinColumn(name = "id_pedido")},
-	    inverseJoinColumns = {@JoinColumn(name = "id_produto")},
-	    uniqueConstraints = {@UniqueConstraint(
-	    columnNames = {"id_pedido", "id_produto"})}
-	)
-	private List<Produto> produtos;
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "pedido")
+	private List<ItemPedido> itemPedidos;
 
 }
