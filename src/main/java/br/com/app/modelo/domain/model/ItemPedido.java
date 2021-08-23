@@ -1,7 +1,5 @@
 package br.com.app.modelo.domain.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
@@ -29,9 +26,9 @@ public class ItemPedido {
 	
 	@Id
 	@Column(name="id_item_pedido")
-	private Integer idItemPedido;	
+	private Long idItemPedido;	
 	@Column(nullable = false)
-	private Integer quantidade;
+	private Integer numQuantidade;
 	
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)

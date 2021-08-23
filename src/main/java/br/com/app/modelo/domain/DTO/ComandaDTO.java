@@ -17,7 +17,6 @@ public class ComandaDTO {
 	private String nome;
 	@NotEmpty(message = "Campo não pode ser nulo")
 	private String numMesa;
-	@NotEmpty(message = "Campo não pode ser nulo")
 	private String flgStatus;
 	private List<Pedido> Pedidos;
 
